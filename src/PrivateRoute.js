@@ -4,7 +4,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { LOGIN_PATH } from './paths';
+import { HOME_PATH, LOGIN_PATH } from './paths';
 import useAuth from './use-auth';
 
 function PrivateRoute(props) {
@@ -29,7 +29,7 @@ function PrivateRoute(props) {
 }
 
 PrivateRoute.defaultProps = {
-  path: '/',
+  path: HOME_PATH,
   exact: false,
   component: undefined,
 };

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
-import { REGISTER_PATH } from '../paths';
+import { HOME_PATH, REGISTER_PATH } from '../paths';
 import LoginForm from './LoginForm';
 import useAuth from '../use-auth';
 
@@ -21,7 +21,7 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await auth.signIn(username, password);
-    history.push('/');
+    history.push(HOME_PATH);
   };
 
   return (

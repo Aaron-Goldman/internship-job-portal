@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import RegisterForm from './RegisterForm';
 import useAuth from '../use-auth';
+import { HOME_PATH } from '../paths';
 
 function Register() {
   const auth = useAuth();
@@ -27,7 +28,7 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await auth.register(username, firstName, lastName, password);
-    history.push('/');
+    history.push(HOME_PATH);
   };
 
   return (
