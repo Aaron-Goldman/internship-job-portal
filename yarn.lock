@@ -5589,7 +5589,7 @@
   "resolved" "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.6.tgz"
   "version" "4.2.6"
 
-"graphql-tag@^2.12.0":
+"graphql-tag@^2.12.0", "graphql-tag@^2.12.1":
   "integrity" "sha512-LPewEE1vzGkHnCO8zdOGogKsHHBdtpGyihow1UuMwp6RnZa0lAS7NcbvltLOuo4pi5diQCPASAXZkQq44ffixA=="
   "resolved" "https://registry.npmjs.org/graphql-tag/-/graphql-tag-2.12.1.tgz"
   "version" "2.12.1"

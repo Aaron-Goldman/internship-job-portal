@@ -14,9 +14,10 @@ function PrivateRoute(props) {
     component,
   } = props;
   const auth = useAuth();
+  const isLoggedIn = !!auth.user;
 
   return (
-    auth.user ? (
+    isLoggedIn ? (
       <Route path={path} exact={exact} component={component} />
     ) : (
       <Redirect

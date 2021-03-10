@@ -4,52 +4,27 @@ import React, {
   createContext,
 } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
+import QUERY_USERS from './graphql/queries';
+import REGISTER from './graphql/mutations';
 
-const REGISTER = gql`
-  mutation RegisterMutation(
-    $username: String!
-    $firstName: String!
-    $lastName: String!
-    $password: String!
-  ) {
-    createUser(
-      username: $username
-      firstName: $firstName
-      lastName: $lastName
-      password: $password
-      userRoleId: 3
-    ) {
-      id
-    }
-  }
-`;
-const QUERY_USERS = gql`
-{
-  users {
-    username
-    id
-    password
-  }
-}
-`;
+const AuthContext = createContext();
 
-const authContext = createContext();
-
-const useAuth = () => useContext(authContext);
+const useAuth = () => useContext(AuthContext);
 
 function useProvideAuth() {
   const [user, setUser] = useState(localStorage.getItem('user') || 0);
-  const { refetch } = useQuery(QUERY_USERS);
+  const { refetch: refetchUsers } = useQuery(QUERY_USERS);
   const [addUser] = useMutation(REGISTER);
 
   const signIn = async (username, password) => {
-    const result = await refetch();
-    if (!result) return;
-    const match = result.data.users.find((element) => element.username === username);
-    if (!match || match.password !== password) return;
+    const result = await refetchUsers();
+    if (!result) return result;
+    const match = result.data.users.find((u) => u.username === username);
+    if (!match || match.password !== password) return result;
     setUser(match.id);
-    localStorage.setItem('user', user);
+    localStorage.setItem('user', match.id);
+    return result;
   };
 
   const signOut = () => {
@@ -58,7 +33,7 @@ function useProvideAuth() {
   };
 
   const register = async (username, firstName, lastName, password) => {
-    await addUser({
+    const result = await addUser({
       variables: {
         username,
         firstName,
@@ -66,6 +41,7 @@ function useProvideAuth() {
         password,
       },
     });
+    return result;
   };
 
   return {
@@ -76,11 +52,11 @@ function useProvideAuth() {
   };
 }
 
-export function ProvideAuth({ children }) {
+export function AuthProvider({ children }) {
   const auth = useProvideAuth();
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
-ProvideAuth.defaultProps = { children: <div /> };
-ProvideAuth.propTypes = { children: PropTypes.element };
+AuthProvider.defaultProps = { children: <div /> };
+AuthProvider.propTypes = { children: PropTypes.element };
 
 export default useAuth;
