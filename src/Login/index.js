@@ -11,17 +11,23 @@ function Login() {
   const history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleUsernameInput = (event) => {
     setUsername(event.target.value);
+    setErrorMessage('');
   };
   const handlePasswordInput = (event) => {
     setPassword(event.target.value);
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await auth.signIn(username, password);
-    history.push(HOME_PATH);
+    try {
+      await auth.signIn(username, password);
+      history.push(HOME_PATH);
+    } catch (e) {
+      setErrorMessage(e.message);
+    }
   };
 
   return (
@@ -38,6 +44,7 @@ function Login() {
         password={password}
         onPasswordChange={handlePasswordInput}
         onSubmit={handleSubmit}
+        errorMessage={errorMessage}
       />
       <Button variant="text" color="default" component={Link} to={REGISTER_PATH}>
         Register

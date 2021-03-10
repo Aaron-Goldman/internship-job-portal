@@ -14,6 +14,7 @@ function RegisterForm(props) {
     password,
     onPasswordChange,
     onSubmit,
+    errorMessage,
   } = props;
 
   return (
@@ -31,6 +32,8 @@ function RegisterForm(props) {
         autoComplete="username"
         value={username}
         onChange={onUsernameChange}
+        error={!!errorMessage}
+        helperText={errorMessage}
       />
       <TextField
         id="firstName-field"
@@ -75,6 +78,7 @@ RegisterForm.propTypes = {
   password: propTypes.string.isRequired,
   onPasswordChange: propTypes.func.isRequired,
   onSubmit: propTypes.func.isRequired,
+  errorMessage: propTypes.string.isRequired,
 };
 
 export default RegisterForm;

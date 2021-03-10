@@ -10,6 +10,7 @@ function LoginForm(props) {
     password,
     onPasswordChange,
     onSubmit,
+    errorMessage,
   } = props;
 
   return (
@@ -25,6 +26,8 @@ function LoginForm(props) {
         id="username-field"
         label="Username"
         autoComplete="username"
+        error={!!errorMessage}
+        helperText={errorMessage}
         value={username}
         onChange={onUsernameChange}
       />
@@ -54,6 +57,7 @@ LoginForm.propTypes = {
   password: propTypes.string.isRequired,
   onPasswordChange: propTypes.func.isRequired,
   onSubmit: propTypes.func.isRequired,
+  errorMessage: propTypes.string.isRequired,
 };
 
 export default LoginForm;

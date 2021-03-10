@@ -12,9 +12,11 @@ function Register() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleUsernameInput = (event) => {
     setUsername(event.target.value);
+    setErrorMessage('');
   };
   const handleFirstNameInput = (event) => {
     setFirstName(event.target.value);
@@ -27,8 +29,12 @@ function Register() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await auth.register(username, firstName, lastName, password);
-    history.push(HOME_PATH);
+    try {
+      await auth.register(username, firstName, lastName, password);
+      history.push(HOME_PATH);
+    } catch (e) {
+      setErrorMessage(e.message);
+    }
   };
 
   return (
@@ -49,6 +55,7 @@ function Register() {
         password={password}
         onPasswordChange={handlePasswordInput}
         onSubmit={handleSubmit}
+        errorMessage={errorMessage}
       />
     </Card>
   );
