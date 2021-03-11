@@ -13,7 +13,7 @@ const AuthContext = createContext();
 const useAuth = () => useContext(AuthContext);
 
 function useProvideAuth() {
-  const [user, setUser] = useState(localStorage.getItem('user') || 0);
+  const [user, setUser] = useState(localStorage.getItem('user') || undefined);
   const { refetch: refetchUsers } = useQuery(QUERY_USERS);
   const [addUser] = useMutation(REGISTER);
 
@@ -29,8 +29,8 @@ function useProvideAuth() {
   };
 
   const signOut = () => {
-    setUser(0);
-    localStorage.setItem('user', 0);
+    setUser(undefined);
+    localStorage.removeItem('user');
   };
 
   const register = async (username, firstName, lastName, password) => {

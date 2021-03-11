@@ -14,6 +14,7 @@ it('renders the login form', () => {
       password=""
       onPasswordChange={onPasswordChange}
       onSubmit={onSubmit}
+      errorMessage=""
     />,
   );
   userEvent.type(screen.getByLabelText('Username'), 'User');
