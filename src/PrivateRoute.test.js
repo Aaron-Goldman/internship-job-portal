@@ -1,8 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Route, MemoryRouter as Router, Switch } from 'react-router-dom';
-import { ApolloProvider } from '@apollo/client';
-import apolloClient from './apollo';
+import { MockedProvider } from '@apollo/client/testing';
 import PrivateRoute from './PrivateRoute';
 import Home from './Home';
 import Login from './Login';
@@ -11,7 +10,7 @@ import AuthProvider from './AuthProvider';
 
 function TestApp() {
   return (
-    <ApolloProvider client={apolloClient}>
+    <MockedProvider>
       <AuthProvider>
         <Router>
           <Switch>
@@ -24,7 +23,7 @@ function TestApp() {
           </Switch>
         </Router>
       </AuthProvider>
-    </ApolloProvider>
+    </MockedProvider>
   );
 }
 
