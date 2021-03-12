@@ -1,5 +1,10 @@
 import React from 'react';
-import { AppBar, Button, Toolbar } from '@material-ui/core';
+import {
+  AppBar,
+  Button,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import useAuth from './use-auth';
 
 function NavBar() {
@@ -16,7 +21,12 @@ function NavBar() {
   return (
     <AppBar position="static">
       <Toolbar>
-        {signOutButton}
+        <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
+          Job Portal
+        </Typography>
+        <div>
+          {signOutButton}
+        </div>
       </Toolbar>
     </AppBar>
   );
