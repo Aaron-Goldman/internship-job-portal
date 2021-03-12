@@ -10,7 +10,7 @@ import REGISTER from './graphql/mutations';
 
 const AuthContext = createContext();
 
-const useAuth = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext);
 
 function useProvideAuth() {
   const [user, setUser] = useState(localStorage.getItem('user') || undefined);
@@ -56,11 +56,11 @@ function useProvideAuth() {
   };
 }
 
-export function AuthProvider({ children }) {
+function AuthProvider({ children }) {
   const auth = useProvideAuth();
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 AuthProvider.defaultProps = { children: <div /> };
 AuthProvider.propTypes = { children: PropTypes.element };
 
-export default useAuth;
+export default AuthProvider;

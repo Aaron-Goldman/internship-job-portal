@@ -12,7 +12,7 @@ import Login from './Login';
 import Register from './Register';
 import NotFound from './NotFound';
 import PrivateRoute from './PrivateRoute';
-import { AuthProvider } from './use-auth';
+import AuthProvider from './AuthProvider';
 import {
   HOME_PATH,
   LOGIN_PATH,

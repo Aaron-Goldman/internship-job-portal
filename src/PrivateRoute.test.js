@@ -7,7 +7,7 @@ import PrivateRoute from './PrivateRoute';
 import Home from './Home';
 import Login from './Login';
 import { HOME_PATH, LOGIN_PATH } from './paths';
-import { AuthProvider } from './use-auth';
+import AuthProvider from './AuthProvider';
 
 function TestApp() {
   return (

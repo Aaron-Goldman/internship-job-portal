@@ -3,7 +3,7 @@ import { isApolloError } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@material-ui/core';
 import RegisterForm from './RegisterForm';
-import useAuth from '../use-auth';
+import { useAuth } from '../AuthProvider';
 import { HOME_PATH } from '../paths';
 
 function Register() {

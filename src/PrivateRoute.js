@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { HOME_PATH, LOGIN_PATH } from './paths';
-import useAuth from './use-auth';
+import { useAuth } from './AuthProvider';
 
 function PrivateRoute(props) {
   const {

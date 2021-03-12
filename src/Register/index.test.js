@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { AuthProvider } from '../use-auth';
+import AuthProvider from '../AuthProvider';
 import Register from './index';
 import QUERY_USERS from '../graphql/queries';
 import REGISTER from '../graphql/mutations';

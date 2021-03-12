@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { HOME_PATH, REGISTER_PATH } from '../paths';
 import LoginForm from './LoginForm';
-import useAuth from '../use-auth';
+import { useAuth } from '../AuthProvider';
 
 function Login() {
   const auth = useAuth();
