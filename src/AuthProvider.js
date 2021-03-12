@@ -5,7 +5,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/client';
-import QUERY_USERS from './graphql/queries';
+import { QUERY_USERS } from './graphql/queries';
 import REGISTER from './graphql/mutations';
 
 const AuthContext = createContext();
