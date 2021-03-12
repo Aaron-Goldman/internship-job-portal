@@ -7,10 +7,12 @@ function LoginForm(props) {
   const {
     username,
     onUsernameChange,
+    usernameError,
     password,
     onPasswordChange,
+    passwordError,
     onSubmit,
-    errorMessage,
+    disabled,
   } = props;
 
   return (
@@ -26,8 +28,8 @@ function LoginForm(props) {
         id="username-field"
         label="Username"
         autoComplete="username"
-        error={!!errorMessage}
-        helperText={errorMessage}
+        error={!!usernameError}
+        helperText={usernameError}
         value={username}
         onChange={onUsernameChange}
       />
@@ -37,6 +39,8 @@ function LoginForm(props) {
         type="password"
         autoComplete="current-password"
         name="password"
+        error={!!passwordError}
+        helperText={passwordError}
         value={password}
         onChange={onPasswordChange}
       />
@@ -44,6 +48,10 @@ function LoginForm(props) {
         variant="outlined"
         color="primary"
         type="submit"
+        disabled={disabled}
+        style={{
+          margin: '1em',
+        }}
       >
         Login
       </Button>
@@ -51,13 +59,21 @@ function LoginForm(props) {
   );
 }
 
+LoginForm.defaultProps = {
+  usernameError: '',
+  passwordError: '',
+  disabled: false,
+};
+
 LoginForm.propTypes = {
   username: propTypes.string.isRequired,
   onUsernameChange: propTypes.func.isRequired,
+  usernameError: propTypes.string,
   password: propTypes.string.isRequired,
   onPasswordChange: propTypes.func.isRequired,
+  passwordError: propTypes.string,
   onSubmit: propTypes.func.isRequired,
-  errorMessage: propTypes.string.isRequired,
+  disabled: propTypes.bool,
 };
 
 export default LoginForm;

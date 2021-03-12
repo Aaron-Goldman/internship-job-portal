@@ -18,7 +18,6 @@ function useProvideAuth() {
   const [addUser] = useMutation(REGISTER);
 
   const signIn = async (username, password) => {
-    if (!username) throw Error('Username required.');
     const result = await refetchUsers();
     if (!result) throw Error('Server did not respond.');
     const match = result.data.users.find((u) => u.username === username);
@@ -34,7 +33,6 @@ function useProvideAuth() {
   };
 
   const register = async (username, firstName, lastName, password) => {
-    if (!username) throw Error('Username required.');
     const users = await refetchUsers();
     if (users && users.data.users.find((u) => u.username === username)) {
       throw Error('Username taken.');

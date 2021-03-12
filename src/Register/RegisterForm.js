@@ -7,14 +7,18 @@ function RegisterForm(props) {
   const {
     username,
     onUsernameChange,
+    usernameError,
     firstName,
     onFirstNameChange,
+    firstNameError,
     lastName,
     onLastNameChange,
+    lastNameError,
     password,
     onPasswordChange,
+    passwordError,
     onSubmit,
-    errorMessage,
+    disabled,
   } = props;
 
   return (
@@ -32,8 +36,8 @@ function RegisterForm(props) {
         autoComplete="username"
         value={username}
         onChange={onUsernameChange}
-        error={!!errorMessage}
-        helperText={errorMessage}
+        error={!!usernameError}
+        helperText={usernameError}
       />
       <TextField
         id="firstName-field"
@@ -41,6 +45,8 @@ function RegisterForm(props) {
         autoComplete="given-name"
         value={firstName}
         onChange={onFirstNameChange}
+        error={!!firstNameError}
+        helperText={firstNameError}
       />
       <TextField
         id="lastName-field"
@@ -48,6 +54,8 @@ function RegisterForm(props) {
         autoComplete="family-name"
         value={lastName}
         onChange={onLastNameChange}
+        error={!!lastNameError}
+        helperText={lastNameError}
       />
       <TextField
         id="password-field"
@@ -56,11 +64,17 @@ function RegisterForm(props) {
         autoComplete="new-password"
         value={password}
         onChange={onPasswordChange}
+        error={!!passwordError}
+        helperText={passwordError}
       />
       <Button
         variant="outlined"
         color="primary"
         type="submit"
+        disabled={disabled}
+        style={{
+          margin: '1em',
+        }}
       >
         Register
       </Button>
@@ -68,17 +82,29 @@ function RegisterForm(props) {
   );
 }
 
+RegisterForm.defaultProps = {
+  usernameError: '',
+  firstNameError: '',
+  lastNameError: '',
+  passwordError: '',
+  disabled: false,
+};
+
 RegisterForm.propTypes = {
   username: propTypes.string.isRequired,
   onUsernameChange: propTypes.func.isRequired,
+  usernameError: propTypes.string,
   firstName: propTypes.string.isRequired,
   onFirstNameChange: propTypes.func.isRequired,
+  firstNameError: propTypes.string,
   lastName: propTypes.string.isRequired,
   onLastNameChange: propTypes.func.isRequired,
+  lastNameError: propTypes.string,
   password: propTypes.string.isRequired,
   onPasswordChange: propTypes.func.isRequired,
+  passwordError: propTypes.string,
   onSubmit: propTypes.func.isRequired,
-  errorMessage: propTypes.string.isRequired,
+  disabled: propTypes.bool,
 };
 
 export default RegisterForm;

@@ -7,7 +7,7 @@ import Login from './index';
 it('renders the login page', () => {
   render(<Router><Login /></Router>);
   expect(screen.getByRole('form')).toBeInTheDocument();
-  expect(screen.getByText('Register')).toBeInTheDocument();
+  expect(screen.getByText('Register Now')).toBeInTheDocument();
   userEvent.type(screen.getByLabelText('Username'), 'User');
   expect(screen.getByDisplayValue('User')).toBeInTheDocument();
   userEvent.type(screen.getByLabelText('Password'), 'password');
