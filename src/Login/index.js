@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { isApolloError } from '@apollo/client';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
@@ -32,6 +33,7 @@ function Login() {
       await auth.signIn(username, password);
       history.push(HOME_PATH);
     } catch (e) {
+      if (isApolloError(e)) { throw e; }
       setUsernameError(e.message);
     }
   };

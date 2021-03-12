@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { isApolloError } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@material-ui/core';
 import RegisterForm from './RegisterForm';
@@ -40,6 +41,7 @@ function Register() {
       await auth.register(username, firstName, lastName, password);
       history.push(HOME_PATH);
     } catch (e) {
+      if (isApolloError(e)) { throw e; }
       setUsernameError(e.message);
     }
   };
