@@ -12,12 +12,14 @@ import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import JobFeed from './JobFeed';
+import JobDetails from './JobDetails';
 import NotFound from './NotFound';
 import PrivateRoute from './PrivateRoute';
 import AuthProvider from './AuthProvider';
 import {
   HOME_PATH,
   JOB_FEED_PATH,
+  JOB_DETAILS_PATH,
   LOGIN_PATH,
   REGISTER_PATH,
   NOT_FOUND_PATH,
@@ -36,6 +38,7 @@ function App() {
               component={Home}
             />
             <PrivateRoute path={JOB_FEED_PATH} component={JobFeed} />
+            <PrivateRoute path={JOB_DETAILS_PATH} component={JobDetails} />
             <Route path={LOGIN_PATH} component={Login} />
             <Route path={REGISTER_PATH} component={Register} />
             <Route path={NOT_FOUND_PATH} component={NotFound} />
