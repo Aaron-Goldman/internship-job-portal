@@ -5,7 +5,7 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import useAuth from './use-auth';
+import { useAuth } from './AuthProvider';
 
 function NavBar() {
   const auth = useAuth();
