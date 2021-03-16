@@ -48,7 +48,7 @@ it('renders the login page', async () => {
   );
   expect(screen.getByRole('form')).toBeInTheDocument();
   expect(screen.getByText('Register Now')).toBeInTheDocument();
-  const loginButton = screen.getAllByRole('button')[0];
+  const [loginButton] = screen.getAllByRole('button');
   expect(loginButton).toBeDisabled();
 
   const usernameField = screen.getByLabelText('Username');
