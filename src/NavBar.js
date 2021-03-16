@@ -12,11 +12,7 @@ function NavBar() {
   const handleSignOut = () => {
     auth.signOut();
   };
-  const signOutButton = (
-    auth.user
-      ? <Button onClick={handleSignOut}>Sign Out</Button>
-      : <div />
-  );
+  const isLoggedIn = !!auth.user;
 
   return (
     <AppBar position="static">
@@ -24,9 +20,7 @@ function NavBar() {
         <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
           Job Portal
         </Typography>
-        <div>
-          {signOutButton}
-        </div>
+        {isLoggedIn && <Button onClick={handleSignOut}>Sign Out</Button>}
       </Toolbar>
     </AppBar>
   );
