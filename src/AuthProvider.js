@@ -20,8 +20,8 @@ function useProvideAuth() {
   const signIn = async (username, password) => {
     const result = await refetchUsers();
     if (!result) throw Error('Server did not respond.');
-    const match = result.data.users.find((u) => u.username === username);
-    if (!match || match.password !== password) throw Error('Incorrect username or password.');
+    const match = result.data.users.find((u) => u.username === username && u.password === password);
+    if (!match) throw Error('Incorrect username or password.');
     setUser(match.id);
     localStorage.setItem('user', match.id);
     return result;
