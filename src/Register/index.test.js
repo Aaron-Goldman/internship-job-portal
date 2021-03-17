@@ -1,12 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import AuthProvider from '../AuthProvider';
 import Register from './index';
 import QUERY_USERS from '../graphql/queries';
 import REGISTER from '../graphql/mutations';
+import { HOME_PATH, REGISTER_PATH } from '../paths';
 
 const mockedUsersResponse = {
   request: { query: QUERY_USERS },
@@ -43,6 +44,7 @@ const mockedRegisterResponse = {
 const mocks = [
   mockedUsersResponse,
   mockedUsersResponse,
+  mockedUsersResponse,
   mockedRegisterResponse,
 ];
 
@@ -50,8 +52,15 @@ it('renders the register page', async () => {
   render(
     <MockedProvider mocks={mocks} addTypename={false}>
       <AuthProvider>
-        <Router>
-          <Register />
+        <Router initialEntries={[REGISTER_PATH]}>
+          <Switch>
+            <Route
+              exact
+              path={HOME_PATH}
+              component={() => <div>Home</div>}
+            />
+            <Route path={REGISTER_PATH} component={Register} />
+          </Switch>
         </Router>
       </AuthProvider>
     </MockedProvider>,
@@ -87,5 +96,5 @@ it('renders the register page', async () => {
   expect(await screen.findByText('Username taken.')).toBeInTheDocument();
   userEvent.type(usernameField, '_');
   userEvent.click(screen.getByRole('button'));
-  expect(screen.queryByText('Username taken.')).not.toBeInTheDocument();
+  expect(await screen.findByText('Home')).toBeInTheDocument();
 });
