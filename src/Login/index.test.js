@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
@@ -65,11 +65,11 @@ it('renders the login page', async () => {
 
   expect(loginButton).toBeEnabled();
 
-  fireEvent.click(loginButton);
+  userEvent.click(loginButton);
   expect(await screen.findByText('Incorrect username or password.')).toBeInTheDocument();
   expect(localStorage.getItem('user')).toBeNull();
   userEvent.type(usernameField, '{backspace}');
-  fireEvent.click(loginButton);
+  userEvent.click(loginButton);
   expect(await screen.findByText('Home')).toBeInTheDocument();
   expect(localStorage.getItem('user')).toEqual('1');
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
@@ -83,9 +83,9 @@ it('renders the register page', async () => {
   userEvent.type(passwordField, 'password');
   expect(screen.getByDisplayValue('password')).toBeInTheDocument();
 
-  fireEvent.click(screen.getByRole('button'));
+  userEvent.click(screen.getByRole('button'));
   expect(await screen.findByText('Username taken.')).toBeInTheDocument();
   userEvent.type(usernameField, '_');
-  fireEvent.click(screen.getByRole('button'));
+  userEvent.click(screen.getByRole('button'));
   expect(screen.queryByText('Username taken.')).not.toBeInTheDocument();
 });
