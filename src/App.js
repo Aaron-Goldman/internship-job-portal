@@ -7,7 +7,7 @@ import {
   Route,
 } from 'react-router-dom';
 import apolloClient from './apollo';
-import NavBar from './NavBar';
+import NavBar from './Navbar';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';

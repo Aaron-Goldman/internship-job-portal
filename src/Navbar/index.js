@@ -5,13 +5,11 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import { useAuth } from './AuthProvider';
+import { useAuth } from '../AuthProvider';
 
 function NavBar() {
   const auth = useAuth();
-  const handleSignOut = () => {
-    auth.signOut();
-  };
+  const handleSignOut = () => auth.signOut();
   const isLoggedIn = !!auth.user;
 
   return (

@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter as Router } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import AuthProvider from './AuthProvider';
-import NavBar from './NavBar';
+import AuthProvider from '../AuthProvider';
+import NavBar from './index';
 
 function TestApp() {
   return (
