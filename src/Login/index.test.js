@@ -54,12 +54,9 @@ describe('Login page', () => {
   };
 
   it('renders the login page', () => {
-    const { loginButton, usernameField, passwordField } = setup();
+    const { loginButton } = setup();
     expect(screen.getByRole('form')).toBeInTheDocument();
     expect(screen.getByText('Register Now')).toBeInTheDocument();
-    expect(loginButton).toBeInTheDocument();
-    expect(usernameField).toBeInTheDocument();
-    expect(passwordField).toBeInTheDocument();
     expect(loginButton).toBeDisabled();
   });
 

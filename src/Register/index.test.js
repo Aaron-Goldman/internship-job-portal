@@ -75,15 +75,9 @@ describe('Register page', () => {
   };
 
   it('renders the register page', () => {
-    const {
-      usernameField, firstNameField, lastNameField, passwordField, registerButton,
-    } = setup();
+    const { registerButton } = setup();
     expect(screen.getByRole('form')).toBeInTheDocument();
-    expect(usernameField).toBeInTheDocument();
-    expect(firstNameField).toBeInTheDocument();
-    expect(lastNameField).toBeInTheDocument();
-    expect(passwordField).toBeInTheDocument();
-    expect(registerButton).toBeInTheDocument();
+    expect(registerButton).toBeDisabled();
   });
 
   it('updates fields with user input', () => {
