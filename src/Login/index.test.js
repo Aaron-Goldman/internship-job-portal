@@ -26,6 +26,7 @@ const mocks = [
 ];
 
 describe('Login page', () => {
+  let testPathname;
   const setup = () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
@@ -35,7 +36,10 @@ describe('Login page', () => {
               <Route
                 exact
                 path={HOME_PATH}
-                component={() => <div>Home</div>}
+                component={({ location }) => {
+                  testPathname = location.pathname;
+                  return (<div>Home</div>);
+                }}
               />
               <Route path={LOGIN_PATH} component={Login} />
             </Switch>
@@ -90,12 +94,22 @@ describe('Login page', () => {
     expect(await screen.findByText('Incorrect username or password.')).toBeInTheDocument();
   });
 
-  it('does not save user state in local storage on failed login', () => {
+  it('does not save user state in local storage on failed login', async () => {
     const { usernameField, passwordField, loginButton } = setup();
     userEvent.type(usernameField, 'wrong username');
     userEvent.type(passwordField, 'wrong password');
     userEvent.click(loginButton);
+    expect(await screen.findByText('Incorrect username or password.')).toBeInTheDocument();
     expect(localStorage.getItem('user')).toBeNull();
+  });
+
+  it('does not redirect to home path on failed login', async () => {
+    const { usernameField, passwordField, loginButton } = setup();
+    userEvent.type(usernameField, 'wrong username');
+    userEvent.type(passwordField, 'wrong password');
+    userEvent.click(loginButton);
+    expect(await screen.findByText('Incorrect username or password.')).toBeInTheDocument();
+    expect(testPathname).not.toBe(HOME_PATH);
   });
 
   it('redirects to home path on successful login', async () => {
@@ -104,6 +118,7 @@ describe('Login page', () => {
     userEvent.type(passwordField, 'password');
     userEvent.click(loginButton);
     expect(await screen.findByText('Home')).toBeInTheDocument();
+    expect(testPathname).toBe(HOME_PATH);
   });
 
   it('saves user state in local storage on successful login', () => {

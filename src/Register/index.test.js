@@ -43,6 +43,7 @@ const mocks = [
 ];
 
 describe('Register page', () => {
+  let testPathname;
   const setup = () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
@@ -52,7 +53,10 @@ describe('Register page', () => {
               <Route
                 exact
                 path={HOME_PATH}
-                component={() => <div>Home</div>}
+                component={({ location }) => {
+                  testPathname = location.pathname;
+                  return (<div>Home</div>);
+                }}
               />
               <Route path={REGISTER_PATH} component={Register} />
             </Switch>
@@ -122,6 +126,19 @@ describe('Register page', () => {
     expect(await screen.findByText('Username taken.')).toBeInTheDocument();
   });
 
+  it('does not redirect to home path on failed registration', async () => {
+    const {
+      usernameField, firstNameField, lastNameField, passwordField, registerButton,
+    } = setup();
+    userEvent.type(usernameField, 'User');
+    userEvent.type(firstNameField, 'John');
+    userEvent.type(lastNameField, 'Smith');
+    userEvent.type(passwordField, 'password');
+    userEvent.click(registerButton);
+    expect(await screen.findByText('Username taken.')).toBeInTheDocument();
+    expect(testPathname).not.toBe(HOME_PATH);
+  });
+
   it('redirects to home path on successful registration', async () => {
     const {
       usernameField, firstNameField, lastNameField, passwordField, registerButton,
@@ -132,5 +149,6 @@ describe('Register page', () => {
     userEvent.type(passwordField, 'password');
     userEvent.click(registerButton);
     expect(await screen.findByText('Home')).toBeInTheDocument();
+    expect(testPathname).toBe(HOME_PATH);
   });
 });
