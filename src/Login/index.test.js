@@ -90,8 +90,11 @@ describe('Login page', () => {
     expect(await screen.findByText('Incorrect username or password.')).toBeInTheDocument();
   });
 
-  it('saves user state in local storage on failed login', () => {
-    setup();
+  it('does not save user state in local storage on failed login', () => {
+    const { usernameField, passwordField, loginButton } = setup();
+    userEvent.type(usernameField, 'wrong username');
+    userEvent.type(passwordField, 'wrong password');
+    userEvent.click(loginButton);
     expect(localStorage.getItem('user')).toBeNull();
   });
 
