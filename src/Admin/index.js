@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 import { QUERY_USER_ROLE, QUERY_USERS_DETAILED } from '../graphql/queries';
 import { useAuth } from '../AuthProvider';
+import EditDialog from './EditDialog';
 
 const ADMIN_ROLE_ID = 1;
 
@@ -52,6 +53,7 @@ function JobFeed() {
               <TableCell>{u.username}</TableCell>
               <TableCell>{u.firstName}</TableCell>
               <TableCell>{u.lastName}</TableCell>
+              <EditDialog userId={u.id} />
             </TableRow>
           ))}
         </TableBody>

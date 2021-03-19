@@ -18,6 +18,15 @@ export const QUERY_USER_ROLE = gql`
     }
   }
 `;
+export const QUERY_USER = gql`
+  query QUERY_USER($id: Int!) {
+    user(id: $id) {
+      username
+      firstName
+      lastName
+    }
+  }
+`;
 export const QUERY_USERS_DETAILED = gql`
   query QUERY_USERS_DETAILED {
     users {
