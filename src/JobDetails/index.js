@@ -17,7 +17,7 @@ function JobDetails() {
   return (
     <div>
       {loading && <CircularProgress />}
-      <Snackbar open={!!error}>{error && error.message}</Snackbar>
+      <Snackbar open={!!error} message={error && error.message} />
       {data && (
         ({
           job: {
