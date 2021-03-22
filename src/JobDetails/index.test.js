@@ -4,7 +4,7 @@ import { Route, MemoryRouter as Router } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import JobDetails from './index';
 import { QUERY_JOB_DETAILS } from '../graphql/queries';
-import { JOB_DETAILS_PATH } from '../paths';
+import { JOB_DETAILS_PATH, JOB_DETAILS_BASE_PATH } from '../paths';
 
 const MOCK_JOB_ID = 1;
 
@@ -50,7 +50,7 @@ const mockedResponses = [
 it('renders the job details page', async () => {
   render(
     <MockedProvider mocks={mockedResponses}>
-      <Router initialEntries={[`/job-details/${MOCK_JOB_ID}`]}>
+      <Router initialEntries={[`${JOB_DETAILS_BASE_PATH}${MOCK_JOB_ID}`]}>
         <Route path={JOB_DETAILS_PATH}>
           <JobDetails />
         </Route>
