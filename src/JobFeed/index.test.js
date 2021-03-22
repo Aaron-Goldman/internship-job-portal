@@ -12,10 +12,26 @@ const mockedResponses = [{
       jobs: [
         {
           id: 1,
-          name: 'Test Job Name',
-          description: 'Test Job Description',
+          name: 'Designer',
+          description: 'Designer description',
           company: {
-            name: 'Test Company Name',
+            name: 'Design Company',
+          },
+        },
+        {
+          id: 2,
+          name: 'Programmer',
+          description: 'Programmer description',
+          company: {
+            name: 'Programming Company',
+          },
+        },
+        {
+          id: 3,
+          name: 'Tester',
+          description: 'Tester description',
+          company: {
+            name: 'Test Company',
           },
         },
       ],
@@ -31,7 +47,13 @@ it('renders the job feed page', async () => {
       </Router>
     </MockedProvider>,
   );
-  expect(await screen.findByText('Test Job Name')).toBeInTheDocument();
-  expect(await screen.findByText('Test Job Description')).toBeInTheDocument();
-  expect(await screen.findByText('Test Company Name')).toBeInTheDocument();
+  expect(await screen.findByText('Designer')).toBeInTheDocument();
+  expect(await screen.findByText('Designer description')).toBeInTheDocument();
+  expect(await screen.findByText('Design Company')).toBeInTheDocument();
+  expect(await screen.findByText('Programmer')).toBeInTheDocument();
+  expect(await screen.findByText('Programmer description')).toBeInTheDocument();
+  expect(await screen.findByText('Programming Company')).toBeInTheDocument();
+  expect(await screen.findByText('Tester')).toBeInTheDocument();
+  expect(await screen.findByText('Tester description')).toBeInTheDocument();
+  expect(await screen.findByText('Test Company')).toBeInTheDocument();
 });
