@@ -7,7 +7,7 @@ import {
   Route,
 } from 'react-router-dom';
 import apolloClient from './apollo';
-import NavBar from './Navbar';
+import Navbar from './Navbar';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
@@ -26,7 +26,7 @@ function App() {
     <ApolloProvider client={apolloClient}>
       <AuthProvider>
         <Router>
-          <NavBar />
+          <Navbar />
           <Switch>
             <PrivateRoute
               exact

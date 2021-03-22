@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import { useAuth } from '../AuthProvider';
 
-function NavBar() {
+function Navbar() {
   const auth = useAuth();
   const handleSignOut = () => auth.signOut();
   const isLoggedIn = !!auth.user;
@@ -24,4 +24,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default Navbar;

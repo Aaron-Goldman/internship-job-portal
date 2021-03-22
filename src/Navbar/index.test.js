@@ -3,14 +3,14 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter as Router } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import AuthProvider from '../AuthProvider';
-import NavBar from './index';
+import Navbar from './index';
 
 function TestApp() {
   return (
     <MockedProvider>
       <AuthProvider>
         <Router>
-          <NavBar />
+          <Navbar />
         </Router>
       </AuthProvider>
     </MockedProvider>
