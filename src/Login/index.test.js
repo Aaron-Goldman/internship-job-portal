@@ -15,9 +15,19 @@ const mocks = [
       data: {
         users: [
           {
+            username: 'root',
+            password: 'xgn8YTmtj6qX0ZCfOkhXqEeOksn954Sw',
+            id: 1,
+          },
+          {
+            username: 'admin',
+            password: 'HePm7QwnN73Z',
+            id: 2,
+          },
+          {
             username: 'User',
             password: 'password',
-            id: 1,
+            id: 3,
           },
         ],
       },
@@ -123,6 +133,6 @@ describe('Login page', () => {
     userEvent.type(usernameField, 'User');
     userEvent.type(passwordField, 'password');
     userEvent.click(loginButton);
-    expect(localStorage.getItem('user')).toEqual('1');
+    expect(localStorage.getItem('user')).toEqual('3');
   });
 });

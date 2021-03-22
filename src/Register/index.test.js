@@ -16,9 +16,19 @@ const mocks = [
       data: {
         users: [
           {
+            username: 'root',
+            password: 'xgn8YTmtj6qX0ZCfOkhXqEeOksn954Sw',
+            id: 1,
+          },
+          {
+            username: 'admin',
+            password: 'HePm7QwnN73Z',
+            id: 2,
+          },
+          {
             username: 'User',
             password: 'password',
-            id: 1,
+            id: 3,
           },
         ],
       },
