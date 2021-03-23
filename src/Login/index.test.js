@@ -15,9 +15,19 @@ const mocks = [
       data: {
         users: [
           {
+            username: 'root',
+            password: 'xgn8YTmtj6qX0ZCfOkhXqEeOksn954Sw',
+            id: 1,
+          },
+          {
+            username: 'admin',
+            password: 'HePm7QwnN73Z',
+            id: 2,
+          },
+          {
             username: 'User',
             password: 'password',
-            id: 1,
+            id: 3,
           },
         ],
       },
@@ -26,6 +36,7 @@ const mocks = [
 ];
 
 describe('Login page', () => {
+  let testPathname;
   const setup = () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
@@ -35,7 +46,10 @@ describe('Login page', () => {
               <Route
                 exact
                 path={HOME_PATH}
-                component={() => <div>Home</div>}
+                component={({ location }) => {
+                  testPathname = location.pathname;
+                  return (<div>Home</div>);
+                }}
               />
               <Route path={LOGIN_PATH} component={Login} />
             </Switch>
@@ -50,12 +64,9 @@ describe('Login page', () => {
   };
 
   it('renders the login page', () => {
-    const { loginButton, usernameField, passwordField } = setup();
+    const { loginButton } = setup();
     expect(screen.getByRole('form')).toBeInTheDocument();
     expect(screen.getByText('Register Now')).toBeInTheDocument();
-    expect(loginButton).toBeInTheDocument();
-    expect(usernameField).toBeInTheDocument();
-    expect(passwordField).toBeInTheDocument();
     expect(loginButton).toBeDisabled();
   });
 
@@ -90,9 +101,22 @@ describe('Login page', () => {
     expect(await screen.findByText('Incorrect username or password.')).toBeInTheDocument();
   });
 
-  it('saves user state in local storage on failed login', () => {
-    setup();
+  it('does not save user state in local storage on failed login', async () => {
+    const { usernameField, passwordField, loginButton } = setup();
+    userEvent.type(usernameField, 'wrong username');
+    userEvent.type(passwordField, 'wrong password');
+    userEvent.click(loginButton);
+    expect(await screen.findByText('Incorrect username or password.')).toBeInTheDocument();
     expect(localStorage.getItem('user')).toBeNull();
+  });
+
+  it('does not redirect to home path on failed login', async () => {
+    const { usernameField, passwordField, loginButton } = setup();
+    userEvent.type(usernameField, 'wrong username');
+    userEvent.type(passwordField, 'wrong password');
+    userEvent.click(loginButton);
+    expect(await screen.findByText('Incorrect username or password.')).toBeInTheDocument();
+    expect(testPathname).not.toBe(HOME_PATH);
   });
 
   it('redirects to home path on successful login', async () => {
@@ -101,6 +125,7 @@ describe('Login page', () => {
     userEvent.type(passwordField, 'password');
     userEvent.click(loginButton);
     expect(await screen.findByText('Home')).toBeInTheDocument();
+    expect(testPathname).toBe(HOME_PATH);
   });
 
   it('saves user state in local storage on successful login', () => {
@@ -108,6 +133,6 @@ describe('Login page', () => {
     userEvent.type(usernameField, 'User');
     userEvent.type(passwordField, 'password');
     userEvent.click(loginButton);
-    expect(localStorage.getItem('user')).toEqual('1');
+    expect(localStorage.getItem('user')).toEqual('3');
   });
 });
