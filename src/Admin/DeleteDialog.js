@@ -2,14 +2,29 @@ import React, { useState } from 'react';
 import {
   Button, Dialog, DialogTitle, DialogContent, DialogActions, CircularProgress, Typography,
 } from '@material-ui/core';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import propTypes from 'prop-types';
 import { QUERY_USER } from '../graphql/queries';
+import { DELETE_USER } from '../graphql/mutations';
 
 function DeleteDialog(props) {
   const { userId } = props;
   const [open, setOpen] = useState(false);
   const { loading, error, data } = useQuery(QUERY_USER, {
+    variables: { id: Number(userId) },
+  });
+  const [deleteUser] = useMutation(DELETE_USER, {
+    update(cache) {
+      cache.modify({
+        fields: {
+          users(existingUsers, { readField }) {
+            return existingUsers.filter(
+              (u) => readField('id', u) !== Number(userId),
+            );
+          },
+        },
+      });
+    },
     variables: { id: Number(userId) },
   });
 
@@ -18,6 +33,10 @@ function DeleteDialog(props) {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleConfirm = () => {
+    deleteUser();
+    handleClose();
   };
 
   return (
@@ -34,7 +53,7 @@ function DeleteDialog(props) {
             <Typography variant="body1">{`${firstName} ${lastName}`}</Typography>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Confirm</Button>
+            <Button onClick={handleConfirm}>Confirm</Button>
             <Button onClick={handleClose}>Cancel</Button>
           </DialogActions>
         </Dialog>

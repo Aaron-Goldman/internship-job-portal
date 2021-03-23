@@ -1,6 +1,6 @@
 import { gql } from 'graphql-tag';
 
-const REGISTER = gql`
+export const REGISTER = gql`
   mutation REGISTER(
     $username: String!
     $firstName: String!
@@ -19,4 +19,10 @@ const REGISTER = gql`
   }
 `;
 
-export default REGISTER;
+export const DELETE_USER = gql`
+  mutation DELETE_USER(
+    $id: [Int!]!
+  ) {
+    deleteUser(id: $id)
+  }
+`;
