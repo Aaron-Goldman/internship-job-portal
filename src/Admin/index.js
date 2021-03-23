@@ -28,9 +28,10 @@ function JobFeed() {
       <Snackbar open={error} message={error && error.message} />
       <Snackbar open={userRoleError} message={userRoleError && userRoleError.message} />
       {userRoleData && (
-        <div>
-          <Snackbar open={userRoleData.user.userRole.id !== ADMIN_ROLE_ID} message="Access Denied" />
-          {data && (
+      <>
+        {userRoleData.user.userRole.id !== ADMIN_ROLE_ID
+          ? <Snackbar open message="Access Denied" />
+          : data && (
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -59,7 +60,7 @@ function JobFeed() {
             </Table>
           </TableContainer>
           )}
-        </div>
+      </>
       )}
     </div>
   );
