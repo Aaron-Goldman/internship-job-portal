@@ -11,16 +11,18 @@ it('renders the login form', () => {
     <LoginForm
       username=""
       onUsernameChange={onUsernameChange}
+      usernameError=""
       password=""
       onPasswordChange={onPasswordChange}
+      passwordError=""
       onSubmit={onSubmit}
     />,
   );
   userEvent.type(screen.getByLabelText('Username'), 'User');
   expect(onUsernameChange).toHaveBeenCalledTimes(4);
 
-  userEvent.type(screen.getByLabelText('Password'), 'UXdlcnR5MTIz');
-  expect(onPasswordChange).toHaveBeenCalledTimes(12);
+  userEvent.type(screen.getByLabelText('Password'), 'password');
+  expect(onPasswordChange).toHaveBeenCalledTimes(8);
 
   fireEvent.submit(screen.getByRole('form'));
   expect(onSubmit).toHaveBeenCalled();

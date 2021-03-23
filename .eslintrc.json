@@ -12,6 +12,8 @@
     ],
     "extends": [
         "plugin:react/recommended",
+        "plugin:testing-library/react",
+        "plugin:jest-dom/recommended",
         "airbnb"
     ],
     "parserOptions": {
@@ -23,7 +25,9 @@
     },
     "plugins": [
         "react",
-        "jest"
+        "jest",
+        "jest-dom",
+        "testing-library"
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],

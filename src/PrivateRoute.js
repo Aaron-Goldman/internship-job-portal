@@ -2,28 +2,27 @@ import React from 'react';
 import {
   Route,
   Redirect,
-  useLocation,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { LOGIN_PATH } from './paths';
+import { HOME_PATH, LOGIN_PATH } from './paths';
+import { useAuth } from './AuthProvider';
 
 function PrivateRoute(props) {
   const {
     path,
     exact,
     component,
-    loggedIn,
   } = props;
-  const location = useLocation();
+  const auth = useAuth();
+  const isLoggedIn = !!auth.user;
 
   return (
-    loggedIn ? (
+    isLoggedIn ? (
       <Route path={path} exact={exact} component={component} />
     ) : (
       <Redirect
         to={{
           pathname: LOGIN_PATH,
-          state: { from: location },
         }}
       />
     )
@@ -31,17 +30,15 @@ function PrivateRoute(props) {
 }
 
 PrivateRoute.defaultProps = {
-  path: '/',
+  path: HOME_PATH,
   exact: false,
   component: undefined,
-  loggedIn: false,
 };
 
 PrivateRoute.propTypes = {
   path: PropTypes.string,
   exact: PropTypes.bool,
   component: PropTypes.func,
-  loggedIn: PropTypes.bool,
 };
 
 export default PrivateRoute;

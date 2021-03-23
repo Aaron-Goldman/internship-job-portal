@@ -20,6 +20,7 @@ it('renders the registration form', () => {
       password=""
       onPasswordChange={onPasswordChange}
       onSubmit={onSubmit}
+      errorMessage=""
     />,
   );
   userEvent.type(screen.getByLabelText('Username'), 'User');
