@@ -5,7 +5,7 @@ import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import AuthProvider from '../AuthProvider';
 import Login from './index';
-import QUERY_USERS from '../graphql/queries';
+import { QUERY_USERS } from '../graphql/queries';
 import { HOME_PATH, LOGIN_PATH } from '../paths';
 
 const mocks = [

@@ -1,6 +1,6 @@
 import { gql } from 'graphql-tag';
 
-const QUERY_USERS = gql`
+export const QUERY_USERS = gql`
   query QUERY_USERS {
     users {
       username
@@ -9,5 +9,15 @@ const QUERY_USERS = gql`
     }
   }
 `;
-
-export default QUERY_USERS;
+export const QUERY_JOBS = gql`
+  query QUERY_JOBS {
+    jobs {
+      id
+      name
+      description
+      company {
+        name
+      }
+    }
+  }
+`;
