@@ -21,3 +21,29 @@ export const QUERY_JOBS = gql`
     }
   }
 `;
+export const QUERY_JOB_DETAILS = gql`
+  query QUERY_JOB_DETAILS($id: Int!) {
+    job(id: $id) {
+      name
+      description
+      isAvailable
+      company {
+        name
+      }
+      jobSkills {
+        skill {
+          id
+          name
+        }
+      }
+      jobRequirements {
+        id
+        name
+      }
+      jobBenefits {
+        id
+        name
+      }
+    }
+  }
+`;
