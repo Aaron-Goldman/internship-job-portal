@@ -1,7 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import {
-  CircularProgress, Paper, TableContainer, Table, TableCell, TableHead, TableRow, TableBody,
+  CircularProgress, Paper, TableContainer, Table,
+  TableCell, TableHead, TableRow, TableBody, Snackbar,
 } from '@material-ui/core';
 import { QUERY_USER_ROLE, QUERY_USERS_DETAILED } from '../graphql/queries';
 import { useAuth } from '../AuthProvider';
@@ -17,51 +18,50 @@ function JobFeed() {
     error: userRoleError,
     data: userRoleData,
   } = useQuery(QUERY_USER_ROLE, {
-    variables: { id: parseInt(auth.user, 10) },
+    variables: { id: Number(auth.user) },
   });
   const { loading, error, data } = useQuery(QUERY_USERS_DETAILED);
 
-  if (loading || userRoleLoading) {
-    return (
-      <CircularProgress />
-    );
-  }
-  if (error) {
-    return (error.message);
-  }
-  if (userRoleError) {
-    return (userRoleError.message);
-  }
-  if (userRoleData.user.userRole.id !== ADMIN_ROLE_ID) {
-    return (<div>Access Denied</div>);
-  }
-
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>id</TableCell>
-            <TableCell>Username</TableCell>
-            <TableCell>First name</TableCell>
-            <TableCell>Last name</TableCell>
-            <TableCell colSpan={2} />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.users.map((u) => (
-            <TableRow key={u.id}>
-              <TableCell>{u.id}</TableCell>
-              <TableCell>{u.username}</TableCell>
-              <TableCell>{u.firstName}</TableCell>
-              <TableCell>{u.lastName}</TableCell>
-              <TableCell><EditDialog userId={u.id} /></TableCell>
-              <TableCell><DeleteDialog userId={u.id} /></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div>
+      {(loading || userRoleLoading) && <CircularProgress />}
+      <Snackbar open={error} message={error && error.message} />
+      <Snackbar open={userRoleError} message={userRoleError && userRoleError.message} />
+      {userRoleData && (
+        <div>
+          <Snackbar open={userRoleData.user.userRole.id !== ADMIN_ROLE_ID} message="Access Denied" />
+          {data && (
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>id</TableCell>
+                  <TableCell>Username</TableCell>
+                  <TableCell>First name</TableCell>
+                  <TableCell>Last name</TableCell>
+                  <TableCell colSpan={2} />
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.users.map(({
+                  id, username, firstName, lastName,
+                }) => (
+                  <TableRow key={id}>
+                    <TableCell>{id}</TableCell>
+                    <TableCell>{username}</TableCell>
+                    <TableCell>{firstName}</TableCell>
+                    <TableCell>{lastName}</TableCell>
+                    <TableCell><EditDialog userId={id} /></TableCell>
+                    <TableCell><DeleteDialog userId={id} /></TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
