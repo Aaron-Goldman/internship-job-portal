@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import {
   Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, CircularProgress,
 } from '@material-ui/core';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import propTypes from 'prop-types';
 import { QUERY_USER } from '../graphql/queries';
+import { UPDATE_USER } from '../graphql/mutations';
 
 function EditDialog(props) {
   const { userId } = props;
@@ -26,6 +27,14 @@ function EditDialog(props) {
       setLastName(currentLastName);
     },
   });
+  const [updateUser] = useMutation(UPDATE_USER, {
+    variables: {
+      id: Number(userId),
+      username,
+      firstName,
+      lastName,
+    },
+  });
 
   const handleUsernameInput = (event) => {
     setUsername(event.target.value);
@@ -44,6 +53,7 @@ function EditDialog(props) {
     setOpen(false);
   };
   const handleConfirm = () => {
+    updateUser();
     handleClose();
   };
 
@@ -62,21 +72,32 @@ function EditDialog(props) {
           <TextField
             label="Username"
             value={username}
+            error={!username}
+            helperText={!username && 'Username required.'}
             onChange={handleUsernameInput}
           />
           <TextField
             label="First name"
             value={firstName}
+            error={!firstName}
+            helperText={!firstName && 'First name required.'}
             onChange={handleFirstNameInput}
           />
           <TextField
             label="Last name"
             value={lastName}
+            error={!lastName}
+            helperText={!lastName && 'Last name required.'}
             onChange={handleLastNameInput}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleConfirm}>Confirm</Button>
+          <Button
+            onClick={handleConfirm}
+            disabled={!(username && firstName && lastName)}
+          >
+            Confirm
+          </Button>
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
