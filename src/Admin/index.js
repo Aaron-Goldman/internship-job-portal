@@ -8,6 +8,7 @@ import { QUERY_USER_ROLE, QUERY_USERS_DETAILED } from '../graphql/queries';
 import { useAuth } from '../AuthProvider';
 import EditDialog from './EditDialog';
 import DeleteDialog from './DeleteDialog';
+import AddDialog from './AddDialog';
 
 const ADMIN_ROLE_ID = 1;
 
@@ -56,6 +57,10 @@ function JobFeed() {
                     <TableCell><DeleteDialog userId={id} /></TableCell>
                   </TableRow>
                 ))}
+                <TableRow>
+                  <TableCell colSpan={5} />
+                  <AddDialog />
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
