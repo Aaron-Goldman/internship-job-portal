@@ -9,21 +9,15 @@ export const QUERY_USERS = gql`
     }
   }
 `;
-export const QUERY_USER_ROLE = gql`
-  query QUERY_USER_ROLE($id: Int!) {
-    user(id: $id) {
-      userRole {
-        id
-      }
-    }
-  }
-`;
 export const QUERY_USER = gql`
   query QUERY_USER($id: Int!) {
     user(id: $id) {
       username
       firstName
       lastName
+      userRole {
+        id
+      }
     }
   }
 `;

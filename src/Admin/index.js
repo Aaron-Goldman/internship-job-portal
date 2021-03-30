@@ -4,7 +4,7 @@ import {
   CircularProgress, Paper, TableContainer, Table,
   TableCell, TableHead, TableRow, TableBody, Snackbar,
 } from '@material-ui/core';
-import { QUERY_USER_ROLE, QUERY_USERS_DETAILED } from '../graphql/queries';
+import { QUERY_USER, QUERY_USERS_DETAILED } from '../graphql/queries';
 import { useAuth } from '../AuthProvider';
 import EditDialog from './EditDialog';
 import DeleteDialog from './DeleteDialog';
@@ -12,25 +12,25 @@ import AddDialog from './AddDialog';
 
 const ADMIN_ROLE_ID = 1;
 
-function JobFeed() {
+function Admin() {
   const auth = useAuth();
   const {
-    loading: userRoleLoading,
-    error: userRoleError,
-    data: userRoleData,
-  } = useQuery(QUERY_USER_ROLE, {
+    loading: userLoading,
+    error: userError,
+    data: userData,
+  } = useQuery(QUERY_USER, {
     variables: { id: Number(auth.user) },
   });
   const { loading, error, data } = useQuery(QUERY_USERS_DETAILED);
 
   return (
     <div>
-      {(loading || userRoleLoading) && <CircularProgress />}
+      {(loading || userLoading) && <CircularProgress />}
       <Snackbar open={error} message={error && error.message} />
-      <Snackbar open={userRoleError} message={userRoleError && userRoleError.message} />
-      {userRoleData && (
+      <Snackbar open={userError} message={userError && userError.message} />
+      {userData && (
       <>
-        {userRoleData.user.userRole.id !== ADMIN_ROLE_ID
+        {userData.user.userRole.id !== ADMIN_ROLE_ID
           ? <Snackbar open message="Access Denied" />
           : data && (
           <TableContainer component={Paper}>
@@ -71,4 +71,4 @@ function JobFeed() {
   );
 }
 
-export default JobFeed;
+export default Admin;
